@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Call and Return Mechanisms & TCO</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#fffaf5;color:#252231;overflow:hidden}
+.slide{display:none;min-height:100vh;padding:55px 8vw 85px;position:relative}.slide.active{display:flex;flex-direction:column;justify-content:center}
+h1{font-size:clamp(38px,5vw,68px);margin:0 0 18px;color:#6b3b28}h2{font-size:clamp(30px,4vw,48px);margin:0 0 24px;color:#9a5734}
+h3{color:#9a5734}p,li{font-size:19px;line-height:1.55}.subtitle{font-size:23px;color:#765f54}.name{margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.card{background:#fff;border:1px solid #ead8ca;border-radius:20px;padding:22px;box-shadow:0 8px 25px #cdb6a655;transition:.25s}.card:hover{transform:translateY(-5px)}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.step{background:#fff;border:2px solid #e3bda5;border-radius:18px;padding:18px;min-width:145px;text-align:center;font-weight:700}.arrow{font-size:25px;color:#c8794d}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:25px}.accent{background:linear-gradient(135deg,#fff0e6,#fff);border-radius:25px;padding:28px}.big{font-size:25px;font-weight:bold;color:#9a5734}
+.stack{display:flex;flex-direction:column-reverse;gap:6px;max-width:400px;margin:15px auto}.frame{padding:14px;background:#ffe4d3;border:2px solid #d99a73;border-radius:10px;text-align:center;font-weight:bold}
+pre{background:#29242a;color:#ffe9db;padding:22px;border-radius:18px;overflow:auto;font-size:17px;line-height:1.5}.highlight{color:#d47b4d;font-weight:bold}
+img.diagram{max-width:75%;max-height:330px;object-fit:contain;display:block;margin:15px auto;border-radius:15px;box-shadow:0 8px 25px #b99e8b55}
+table{width:100%;border-collapse:collapse;background:white;border-radius:15px;overflow:hidden;box-shadow:0 6px 20px #cdb6a655}th,td{padding:15px;border-bottom:1px solid #ead8ca;text-align:left}th{background:#ffe8d9;color:#793f27}
+.nav{position:fixed;bottom:20px;left:0;right:0;display:flex;justify-content:center;gap:12px;z-index:10}.nav button{border:0;background:#9a5734;color:white;padding:11px 18px;border-radius:25px;cursor:pointer;font-weight:bold}.nav button:hover{background:#713b26}
+.counter{position:fixed;top:18px;right:25px;background:white;padding:8px 14px;border-radius:20px;box-shadow:0 4px 15px #b99e8b55;color:#9a5734;font-weight:bold}.bar{position:fixed;top:0;left:0;height:5px;background:#d47b4d;transition:.3s}
+@media(max-width:750px){.two{grid-template-columns:1fr}.slide{padding:35px 6vw 80px}p,li{font-size:16px}img.diagram{max-width:95%}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div><div class="counter" id="counter"></div>
+
+<section class="slide active"><h1>Call and Return Mechanisms in Modern Languages</h1><p class="subtitle">How Function Calls Are Handled and Tail Call Optimization in Functional Languages</p><p class="name"><b>Presentation By Maitrayee Gawde</b></p><div class="flow"><div class="step">Function Calls</div><span class="arrow">→</span><div class="step">Stack Frames</div><span class="arrow">→</span><div class="step">Return</div><span class="arrow">→</span><div class="step">TCO</div></div></section>
+
+<section class="slide"><h2>Introduction</h2><div class="grid"><div class="card"><h3>📞 Control Transfer</h3><p>A function call transfers program control from a caller to a called function.</p></div><div class="card"><h3>🧠 Execution State</h3><p>The runtime preserves the caller's execution state while the function executes.</p></div><div class="card"><h3>📦 Runtime Data</h3><p>Call/return mechanisms manage arguments, local variables, return addresses and results.</p></div><div class="card"><h3>⚡ Modern Implementation</h3><p>Stack frames, registers, calling conventions and runtime environments support function calls.</p></div></div></section>
+
+<section class="slide"><h2>What Happens During a Function Call?</h2><div class="flow"><div class="step">1. Evaluate<br>Arguments</div><span class="arrow">→</span><div class="step">2. Pass<br>Parameters</div><span class="arrow">→</span><div class="step">3. Save<br>Return Address</div><span class="arrow">→</span><div class="step">4. Create<br>Frame</div><span class="arrow">→</span><div class="step">5. Execute<br>Function</div><span class="arrow">→</span><div class="step">6. Return<br>Result</div></div></section>
+
+<section class="slide"><h2>Activation Records / Stack Frames</h2><div class="two"><div><p>An activation record, or stack frame, stores information required to execute a function and return safely to its caller.</p><div class="grid"><div class="card">Parameters / arguments</div><div class="card">Local variables</div><div class="card">Return address</div><div class="card">Saved registers</div><div class="card">Temporary values</div></div></div><div><img class="diagram" src="assets/Activation-Records.png" alt="Activation Records"></div></div></section>
+
+<section class="slide"><h2>Call Stack</h2><div class="two"><div><p>Each active function generally has its own stack frame.</p><p>When <b>process()</b> returns, its frame is removed and control goes back to <b>calculate()</b>.</p></div><div class="stack"><div class="frame">main()</div><div class="frame">calculate()</div><div class="frame">process()</div></div></div></section>
+
+<section class="slide"><h2>Calling Conventions</h2><div class="two"><div><ul><li>Define how caller and callee communicate at machine level.</li><li>Specify how arguments are passed — registers or stack.</li><li>Define where the return value is placed.</li><li>Determine which registers are preserved.</li><li>Define stack-management responsibilities.</li><li>Provide a standard interface between separately compiled functions.</li></ul></div><div><img class="diagram" src="assets/Calling-Conventions.png" alt="Calling Conventions"></div></div></section>
+
+<section class="slide"><h2>Call and Return Mechanism</h2><div class="two"><div class="card"><h3>📞 Call</h3><ol><li>Caller prepares arguments.</li><li>Return address is saved.</li><li>Control transfers to callee.</li><li>Callee establishes its execution frame.</li></ol></div><div class="card"><h3>↩️ Return</h3><ol><li>Function completes execution.</li><li>Return value is prepared.</li><li>Callee restores required state.</li><li>Control returns to saved address.</li></ol></div></div></section>
+
+<section class="slide"><h2>Tail Calls</h2><div class="accent"><p>A <b>tail call</b> occurs when a function call is the final operation performed by the calling function.</p><p>No computation remains after the called function returns.</p><p>Because the caller has no further work, its stack frame can potentially be reused.</p><p>Tail calls are especially important in functional programming and recursive algorithms.</p></div></section>
+
+<section class="slide"><h2>Tail Call Optimization (TCO)</h2><div class="two"><div><p>TCO is a compiler optimization that eliminates unnecessary stack-frame creation for calls in tail position.</p><ul><li>Caller has no remaining computation.</li><li>Current activation record can be reused.</li><li>Tail-recursive functions can use constant stack space.</li><li>Useful when recursion replaces iteration.</li></ul></div><div><img class="diagram" src="assets/Tail-calls.png" alt="Tail Calls"></div></div></section>
+
+<section class="slide"><h2>TCO: Before vs After</h2><div class="two"><div class="card"><h3>Before Optimization</h3><p>factorial(3, 1)</p><p>↓ Create new frame</p><p>factorial(2, 3)</p><p>↓ Create new frame</p><p>factorial(1, 6)</p></div><div class="card"><h3>After TCO</h3><p>factorial(3, 1)</p><p>↓ Reuse current frame</p><p>factorial(2, 3)</p><p>↓ Reuse current frame</p><p>factorial(1, 6)</p></div></div></section>
+
+<section class="slide"><h2>Tail-Recursive Sum</h2><pre>int sum(int n, int total) {
+    if (n == 0) return total;
+    return <span class="highlight">sum(n - 1, total + n);</span>
+}</pre><p>For <b>sum(5, 0)</b>:</p><div class="flow"><div class="step">sum(5,0)</div><span class="arrow">→</span><div class="step">sum(4,5)</div><span class="arrow">→</span><div class="step">sum(3,9)</div><span class="arrow">→</span><div class="step">sum(2,12)</div><span class="arrow">→</span><div class="step">sum(1,14)</div><span class="arrow">→</span><div class="step">sum(0,15)</div><span class="arrow">→</span><div class="step">15</div></div></section>
+
+<section class="slide"><h2>TCO in Functional Languages</h2><div class="accent"><p>Functional languages often use recursion instead of traditional loops.</p><p>TCO prevents each recursive call from creating a new stack frame.</p><p>This allows deep recursion to use approximately constant stack space when the calls remain in tail position.</p><div class="big">Recursion + TCO → Memory efficiency similar to iteration</div></div></section>
+
+<section class="slide"><h2>Benefits & Limitations</h2><div class="two"><div class="card"><h3>Advantages</h3><ul><li>Reduces stack memory usage</li><li>Helps prevent stack overflow for deep tail recursion</li><li>Makes recursion comparable to iteration in memory efficiency</li></ul></div><div class="card"><h3>Limitations</h3><ul><li>Applies only to calls in tail position</li><li>Non-tail recursion cannot be optimized this way</li><li>Debugging and stack traces may be less intuitive</li></ul></div></div><p><b>Important:</b> TCO improves memory efficiency, but does not eliminate the computational cost of recursion.</p></section>
+
+<section class="slide"><h2>Normal Calls vs Tail Calls</h2><table><tr><th>Aspect</th><th>Normal Call</th><th>Tail Call</th></tr><tr><td>Position</td><td>Can occur anywhere</td><td>Must be final operation</td></tr><tr><td>Stack frame</td><td>New frame generally created</td><td>Frame can be reused</td></tr><tr><td>Stack usage</td><td>May grow with recursion</td><td>Can remain constant with TCO</td></tr><tr><td>Optimization</td><td>Limited</td><td>Suitable for TCO</td></tr><tr><td>Common use</td><td>General function execution</td><td>Recursive algorithms</td></tr></table></section>
+
+<section class="slide"><h2>Conclusion</h2><div class="accent"><ul><li>Call and return mechanisms manage control transfer and execution state.</li><li>Activation records, call stacks and calling conventions support runtime execution.</li><li>A tail call occurs when the function call is the final operation.</li><li>TCO allows the current stack frame to be reused.</li><li>TCO makes suitable recursive programs memory-efficient, particularly in functional languages.</li></ul></div></section>
+
+<section class="slide"><h1>Thank You!</h1><p class="subtitle">Questions?</p></section>
+
+<div class="nav"><button onclick="prev()">← Previous</button><button onclick="next()">Next →</button></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+function show(n){i=(n+slides.length)%slides.length;slides.forEach((s,k)=>s.classList.toggle('active',k===i));document.getElementById('counter').textContent=(i+1)+' / '+slides.length;document.getElementById('bar').style.width=((i+1)/slides.length*100)+'%')}
+function next(){show(i+1)}function prev(){show(i-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft')prev()});show(0);
+</script>
+</body></html>
