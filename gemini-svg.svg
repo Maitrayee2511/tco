@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" style="background-color: #f8fafc; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  
+  <!-- Header Section -->
+  <text x="80" y="70" font-size="32" font-weight="800" fill="#0f172a">FUNCTION CALL PROCESS</text>
+  <text x="80" y="102" font-size="18" font-weight="500" fill="#64748b">How control flow, parameter passing, and return values work in execution memory</text>
+
+  <!-- Top Flow Summary -->
+  <g transform="translate(900, 48)">
+    <rect width="620" height="50" rx="25" fill="#e0f2fe" stroke="#bae6fd" stroke-width="1.5"/>
+    <text x="310" y="31" font-size="14" font-weight="700" fill="#0369a1" text-anchor="middle">
+      CALL  ➔  EVALUATE  ➔  PASS  ➔  SAVE STATE  ➔  EXECUTE  ➔  RETURN  ➔  CONTINUE
+    </text>
+  </g>
+
+  <!-- Source Code Example Box -->
+  <g transform="translate(80, 130)">
+    <rect width="1440" height="150" rx="12" fill="#0f172a"/>
+    <text x="25" y="35" font-size="13" font-weight="700" fill="#38bdf8" letter-spacing="1.5">SOURCE CODE EXAMPLE</text>
+    
+    <!-- Code Column 1: main -->
+    <text x="25" y="72" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      <tspan fill="#f43f5e">main</tspan>() {
+    </text>
+    <text x="55" y="100" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      <tspan fill="#38bdf8">int</tspan> result = <tspan fill="#fbbf24">add</tspan>(<tspan fill="#a3e635">10</tspan>, <tspan fill="#a3e635">20</tspan>);
+    </text>
+    <text x="55" y="128" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      print(result);
+    </text>
+    <text x="25" y="128" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      }
+    </text>
+
+    <!-- Code Column 2: add -->
+    <text x="750" y="72" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      <tspan fill="#fbbf24">add</tspan>(<tspan fill="#38bdf8">int</tspan> a, <tspan fill="#38bdf8">int</tspan> b) {
+    </text>
+    <text x="780" y="100" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      <tspan fill="#f43f5e">return</tspan> a + b;
+    </text>
+    <text x="750" y="128" font-family="'Fira Code', 'Courier New', monospace" font-size="18" fill="#f8fafc">
+      }
+    </text>
+  </g>
+
+  <!-- STEP 1: CALLER -->
+  <g transform="translate(80, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#2563eb"/>
+    <rect width="175" height="15" y="30" fill="#2563eb"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">1. CALLER</text>
+    
+    <circle cx="87.5" cy="95" r="28" fill="#eff6ff"/>
+    <path d="M75 95 L100 95 M92 87 L100 95 L92 103" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="87.5" y="160" font-size="17" font-weight="700" fill="#1e293b" text-anchor="middle">main()</text>
+    
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#f1f5f9"/>
+    <text x="87.5" y="215" font-size="13" font-weight="600" fill="#2563eb" text-anchor="middle">Call Statement:</text>
+    <text x="87.5" y="242" font-family="monospace" font-size="15" font-weight="700" fill="#0f172a" text-anchor="middle">add(10, 20)</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">main() calls add()</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">with arguments</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">10 and 20</text>
+  </g>
+
+  <!-- Arrow 1->2 -->
+  <path d="M 260 525 L 285 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 2: EVALUATE ARGUMENTS -->
+  <g transform="translate(290, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#0284c7"/>
+    <rect width="175" height="15" y="30" fill="#0284c7"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">2. EVALUATE</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#f0f9ff"/>
+    <text x="87.5" y="103" font-size="20" font-weight="800" fill="#0284c7" text-anchor="middle">f(x)</text>
+
+    <text x="87.5" y="160" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Evaluate Args</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#f0f9ff"/>
+    <text x="87.5" y="215" font-size="13" font-weight="600" fill="#0284c7" text-anchor="middle">Arguments:</text>
+    <text x="87.5" y="244" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">10, 20</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Arguments are</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">evaluated into</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">concrete values</text>
+  </g>
+
+  <!-- Arrow 2->3 -->
+  <path d="M 470 525 L 495 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 3: PASS PARAMETERS -->
+  <g transform="translate(500, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#0d9488"/>
+    <rect width="175" height="15" y="30" fill="#0d9488"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">3. PASS PARAMS</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#ccfbf1"/>
+    <path d="M73 95 L102 95 M92 86 L102 95 L92 104" stroke="#0d9488" stroke-width="3" stroke-linecap="round"/>
+
+    <text x="87.5" y="160" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Assign Params</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#ccfbf1"/>
+    <text x="87.5" y="215" font-family="monospace" font-size="16" font-weight="700" fill="#0f172a" text-anchor="middle">a = 10</text>
+    <text x="87.5" y="242" font-family="monospace" font-size="16" font-weight="700" fill="#0f172a" text-anchor="middle">b = 20</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Values are passed</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">into parameters</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">for add()</text>
+  </g>
+
+  <!-- Arrow 3->4 -->
+  <path d="M 680 525 L 705 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 4: SAVE RETURN ADDRESS -->
+  <g transform="translate(710, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#d97706"/>
+    <rect width="175" height="15" y="30" fill="#d97706"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">4. SAVE STATE</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#fef3c7"/>
+    <rect x="72" y="82" width="31" height="7" rx="2" fill="#d97706"/>
+    <rect x="72" y="92" width="31" height="7" rx="2" fill="#b45309"/>
+    <rect x="72" y="102" width="31" height="7" rx="2" fill="#78350f"/>
+
+    <text x="87.5" y="160" font-size="15" font-weight="700" fill="#1e293b" text-anchor="middle">Return Address</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#fef3c7"/>
+    <text x="87.5" y="215" font-size="13" font-weight="700" fill="#b45309" text-anchor="middle">Call Stack</text>
+    <text x="87.5" y="242" font-size="13" font-weight="600" fill="#78350f" text-anchor="middle">Saved Pointer 📍</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Remembers where</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">main() should</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">continue later</text>
+  </g>
+
+  <!-- Arrow 4->5 -->
+  <path d="M 890 525 L 915 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 5: EXECUTE -->
+  <g transform="translate(920, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#7c3aed"/>
+    <rect width="175" height="15" y="30" fill="#7c3aed"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">5. EXECUTE</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#f3e8ff"/>
+    <text x="87.5" y="103" font-size="22" font-weight="800" fill="#7c3aed" text-anchor="middle">⚙️</text>
+
+    <text x="87.5" y="160" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">add(10, 20)</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#f3e8ff"/>
+    <text x="87.5" y="215" font-family="monospace" font-size="14" font-weight="700" fill="#6b21a8" text-anchor="middle">10 + 20</text>
+    <text x="87.5" y="244" font-family="monospace" font-size="22" font-weight="800" fill="#581c87" text-anchor="middle">= 30</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Function performs</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">its internal logic</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">(10 + 20)</text>
+  </g>
+
+  <!-- Arrow 5->6 -->
+  <path d="M 1100 525 L 1125 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 6: RETURN RESULT -->
+  <g transform="translate(1130, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#db2777"/>
+    <rect width="175" height="15" y="30" fill="#db2777"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">6. RETURN</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#fce7f3"/>
+    <path d="M100 95 L75 95 M83 87 L75 95 L83 103" stroke="#db2777" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="87.5" y="160" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Return Result</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#fce7f3"/>
+    <text x="87.5" y="215" font-size="13" font-weight="700" fill="#9d174d" text-anchor="middle">Result Passed:</text>
+    <text x="87.5" y="244" font-family="monospace" font-size="17" font-weight="800" fill="#831843" text-anchor="middle">30 ➔ main()</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Result value 30</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">is returned to</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">the caller</text>
+  </g>
+
+  <!-- Arrow 6->7 -->
+  <path d="M 1310 525 L 1335 525" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrowhead)"/>
+
+  <!-- STEP 7: CONTINUE -->
+  <g transform="translate(1340, 310)">
+    <rect width="175" height="430" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect width="175" height="45" rx="12" fill="#16a34a"/>
+    <rect width="175" height="15" y="30" fill="#16a34a"/>
+    <text x="87.5" y="28" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">7. CONTINUE</text>
+
+    <circle cx="87.5" cy="95" r="28" fill="#dcfce7"/>
+    <path d="M75 95 L83 103 L100 86" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text x="87.5" y="160" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Resume main()</text>
+
+    <rect x="15" y="185" width="145" height="85" rx="8" fill="#dcfce7"/>
+    <text x="87.5" y="215" font-size="13" font-weight="600" fill="#15803d" text-anchor="middle">Next Execution:</text>
+    <text x="87.5" y="242" font-family="monospace" font-size="15" font-weight="800" fill="#166534" text-anchor="middle">print(30)</text>
+
+    <text x="87.5" y="315" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">main() continues</text>
+    <text x="87.5" y="335" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">from where it</text>
+    <text x="87.5" y="355" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">stopped</text>
+  </g>
+
+  <!-- Marker Arrowhead Definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Bottom Academic Takeaway -->
+  <g transform="translate(80, 765)">
+    <rect width="1440" height="75" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="30" y="32" font-size="15" font-weight="700" fill="#0f172a">SUMMARY:</text>
+    <text x="30" y="55" font-size="14" font-weight="500" fill="#475569">
+      The computer saves the caller’s state on the call stack so it can return and continue execution after the function finishes.
+    </text>
+  </g>
+</svg>
