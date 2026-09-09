@@ -31,7 +31,10 @@ p,li{font-size:19px;line-height:1.55}
 .code{background:#252228;color:#fff0e6;border-radius:18px;padding:22px 26px;font:16px/1.6 Consolas,monospace;white-space:pre-wrap;box-shadow:0 8px 25px #6d504333}
 .hl{color:#ffb083;font-weight:700}
 .diagram{display:block;max-width:100%;width:auto;max-height:280px;object-fit:contain;margin:4px auto;border-radius:14px;box-shadow:0 8px 25px #8e695726;background:white}
-.caption{text-align:center;color:var(--muted);font-size:14px;margin-top:4px}
+/* Large diagram layout for Slide 2 */
+.diagram-container-large{width:100%;margin:16px 0;text-align:center}
+.diagram-large{display:block;width:100%;max-width:1300px;max-height:480px;object-fit:contain;margin:0 auto;border-radius:16px;box-shadow:0 10px 30px #8e695726;background:white}
+.caption{text-align:center;color:var(--muted);font-size:14px;margin-top:8px}
 .stack{display:flex;flex-direction:column-reverse;gap:8px;width:min(390px,90%);margin:auto}
 .frame{padding:14px;border:2px solid #d99a73;background:#ffe7d8;border-radius:11px;text-align:center;font-weight:700}
 table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 25px #bfa89b38;font-size:16px}
@@ -50,6 +53,7 @@ button:hover{background:#71391f}
  .subtitle{font-size:18px}.flow{justify-content:flex-start}
  .step{min-width:110px;padding:10px;font-size:13px}
  .diagram{max-height:220px}
+ .diagram-large{max-height:260px}
  table{font-size:14px}th,td{padding:10px}
 }
 </style>
@@ -69,25 +73,14 @@ button:hover{background:#71391f}
 <!-- Slide 2 -->
 <section class="slide">
 <h2>Introduction & Function Call Process</h2>
-<div class="grid">
-<div>
-<div class="accent">
-<p>A <b>function call</b> transfers program control from a caller to a called function. The runtime preserves execution state throughout this transition.</p>
-<p>Mechanisms manage <b>arguments, local variables, return addresses, saved registers, and return values</b>.</p>
+
+<div class="accent" style="margin-bottom: 12px;">
+<p style="margin: 0;">A <b>function call</b> transfers program control from a caller to a called function, preserving execution state. Modern language runtimes systematically manage <b>arguments, parameters, return addresses, saved registers, and return values</b>.</p>
 </div>
-</div>
-<div>
-<img class="diagram" src="gemini-svg.png" alt="Function call execution process diagram">
-<div class="caption">Overview of the function call process execution</div>
-</div>
-</div>
-<div class="flow">
-<div class="step">Evaluate<br>Arguments</div><span class="arrow">→</span>
-<div class="step">Pass<br>Parameters</div><span class="arrow">→</span>
-<div class="step">Save Return<br>Address</div><span class="arrow">→</span>
-<div class="step">Create<br>Frame</div><span class="arrow">→</span>
-<div class="step">Execute<br>Function</div><span class="arrow">→</span>
-<div class="step">Return<br>Result</div>
+
+<div class="diagram-container-large">
+<img class="diagram-large" src="gemini-svg.png" alt="Function call execution process diagram">
+<div class="caption">Complete left-to-right function call process flow</div>
 </div>
 </section>
 
